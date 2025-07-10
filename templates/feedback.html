@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SERVICOM Feedback Form</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Navbar -->
+
+  <nav class="navbar">
+    <div class="navbar-container">
+      <div class="logo">
+        <div class="logo-icon">
+          <img src="{% static 'servicom-logo.png' %}" alt="SERVICOM logo">
+        </div>
+      </div>
+
+      <div class="center-text">
+        <h1>PTI SERVICOM UNIT </h1>
+      </div>
+
+      <div class="right-logo">
+        <img src="{% static 'pti.png' %}" alt="PTI logo" class="pti-logo">
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="header">
+      <h2>FEEDBACK FORM </h2>
+      <p>Your feedback helps us improve our services</p>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-container">
+      <div class="progress-bar">
+        <div class="progress-step">
+          <div class="step-circle active" id="step-1">1</div>
+          <div class="step-line" id="line-1"></div>
+        </div>
+        <div class="progress-step">
+          <div class="step-circle" id="step-2">2</div>
+          <div class="step-line" id="line-2"></div>
+        </div>
+        <div class="progress-step">
+          <div class="step-circle" id="step-3">3</div>
+          <div class="step-line" id="line-3"></div>
+        </div>
+        <div class="progress-step">
+          <div class="step-circle" id="step-4">4</div>
+        </div>
+      </div>
+      <div class="step-labels">
+        <div class="step-label active">Personal Info</div>
+        <div class="step-label">Service Details</div>
+        <div class="step-label">Feedback</div>
+        <div class="step-label">Contact & Final</div>
+      </div>
+    </div>
+
+    <div class="form-container">
+      {% if success %}
+        <div class="success-message">
+          🎉 Thank you for your valuable feedback! We appreciate your time and input.
+        </div>
+      {% endif %}
+
+      <form method="post" action="{% url 'submit_feedback' %}" id="feedbackForm">
+        {% csrf_token %}
+
+        <!-- Step 1: Personal Information -->
+        <div class="form-step active" id="step1">
+          <div class="step-indicator">
+            <span class="current-step">Step 1 of 4:</span> Personal Information
+          </div>
+
+          <div class="form-section">
+            <label for="name">
+              <span class="question-number">1</span>Name<span class="required-asterisk">*</span>
+            </label>
+            <input type="text" id="name" name="name" required placeholder="Enter your full name">
+          </div>
+
+          <div class="form-section">
+            <label for="address"><span class="question-number">2</span>Address</label>
+            <input type="text" id="address" name="address" placeholder="Enter your address">
+          </div>
+
+          <div class="form-section">
+            <label for="state"><span class="question-number">3</span>State</label>
+            <select id="state" name="state">
+              <option value="">Select your state</option>
+              <option value="Abia">Abia</option>
+              <option value="Adamawa">Adamawa</option>
+              <option value="Akwa Ibom">Akwa Ibom</option>
+              <option value="Anambra">Anambra</option>
+              <option value="Bauchi">Bauchi</option>
+              <option value="Bayelsa">Bayelsa</option>
+              <option value="Benue">Benue</option>
+              <option value="Borno">Borno</option>
+              <option value="Cross River">Cross River</option>
+              <option value="Delta">Delta</option>
+              <option value="Ebonyi">Ebonyi</option>
+              <option value="Edo">Edo</option>
+              <option value="Ekiti">Ekiti</option>
+              <option value="Enugu">Enugu</option>
+              <option value="FCT">Federal Capital Territory (FCT)</option>
+              <option value="Gombe">Gombe</option>
+              <option value="Imo">Imo</option>
+              <option value="Jigawa">Jigawa</option>
+              <option value="Kaduna">Kaduna</option>
+              <option value="Kano">Kano</option>
+              <option value="Katsina">Katsina</option>
+              <option value="Kebbi">Kebbi</option>
+              <option value="Kogi">Kogi</option>
+              <option value="Kwara">Kwara</option>
+              <option value="Lagos">Lagos</option>
+              <option value="Nasarawa">Nasarawa</option>
+              <option value="Niger">Niger</option>
+              <option value="Ogun">Ogun</option>
+              <option value="Ondo">Ondo</option>
+              <option value="Osun">Osun</option>
+              <option value="Oyo">Oyo</option>
+              <option value="Plateau">Plateau</option>
+              <option value="Rivers">Rivers</option>
+              <option value="Sokoto">Sokoto</option>
+              <option value="Taraba">Taraba</option>
+              <option value="Yobe">Yobe</option>
+              <option value="Zamfara">Zamfara</option>
+            </select>
+          </div>
+
+          <div class="form-section">
+            <label>
+              <span class="question-number">4</span>Position<span class="required-asterisk">*</span>
+            </label>
+            <div class="radio-group">
+              <div class="option-item">
+                <input type="radio" id="staff" name="position" value="Staff" required>
+                <label for="staff">Staff</label>
+              </div>
+              <div class="option-item">
+                <input type="radio" id="student" name="position" value="Student" required>
+                <label for="student">Student</label>
+              </div>
+              <div class="option-item">
+                <input type="radio" id="contractor" name="position" value="Contractor" required>
+                <label for="contractor">Contractor</label>
+              </div>
+              <div class="option-item">
+                <input type="radio" id="others" name="position" value="Others" required>
+                <label for="others">Others</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-navigation">
+            <div></div>
+            <button type="button" class="btn btn-primary" onclick="nextStep(1)">
+              <span class="btn-text">Next</span>
+              <i class="fas fa-arrow-right btn-icon-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 2: Service Details -->
+        <div class="form-step" id="step2">
+          <div class="step-indicator">
+            <span class="current-step">Step 2 of 4:</span> Service Details
+          </div>
+
+          <div class="form-section">
+            <label for="services_requested"><span class="question-number">5</span>Services Requested</label>
+            <textarea id="services_requested" name="services_requested" placeholder="Describe the services you requested..."></textarea>
+          </div>
+
+          <div class="form-section">
+            <label for="department"><span class="question-number">6</span>Name of Department Services Requested From</label>
+            <input type="text" id="department" name="department" placeholder="Enter department name">
+          </div>
+
+          <div class="form-section">
+            <label for="staff_name"><span class="question-number">7</span>Name of Staff That Rendered the Services</label>
+            <input type="text" id="staff_name" name="staff_name" placeholder="Enter staff member's name">
+          </div>
+
+          <div class="form-navigation">
+            <button type="button" class="btn btn-secondary" onclick="prevStep(2)">
+              <i class="fas fa-arrow-left btn-icon"></i>
+              <span class="btn-text">Previous</span>
+            </button>
+            <button type="button" class="btn btn-primary" onclick="nextStep(2)">
+              <span class="btn-text">Next</span>
+              <i class="fas fa-arrow-right btn-icon-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 3: Feedback & Rating -->
+        <div class="form-step" id="step3">
+          <div class="step-indicator">
+            <span class="current-step">Step 3 of 4:</span> Feedback & Rating
+          </div>
+
+          <div class="form-section">
+            <label><span class="question-number">8</span>Rate the Services Rendered/Received</label>
+            <div class="radio-group">
+              <div class="option-item">
+                <input type="radio" id="excellent" name="rating" value="Excellent">
+                <label for="excellent">⭐⭐⭐⭐⭐ Excellent</label>
+              </div>
+              <div class="option-item">
+                <input type="radio" id="very_good" name="rating" value="Very Good">
+                <label for="very_good">⭐⭐⭐⭐ Very Good</label>
+              </div>
+              <div class="option-item">
+                <input type="radio" id="good" name="rating" value="Good">
+                <label for="good">⭐⭐⭐ Good</label>
+              </div>
+              <div class="option-item">
+                <input type="radio" id="fair" name="rating" value="Fair">
+                <label for="fair">⭐⭐ Fair</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <label for="complaint"><span class="question-number">9</span>Any Complaint</label>
+            <textarea id="complaint" name="complaint" placeholder="Please share any complaints or concerns..."></textarea>
+          </div>
+
+          <div class="form-section">
+            <label for="suggestions"><span class="question-number">10</span>Suggestions for Better Services in Future</label>
+            <textarea id="suggestions" name="suggestions" placeholder="Share your suggestions for improving our services..."></textarea>
+          </div>
+
+          <div class="form-navigation">
+            <button type="button" class="btn btn-secondary" onclick="prevStep(3)">
+              <i class="fas fa-arrow-left btn-icon"></i>
+              <span class="btn-text">Previous</span>
+            </button>
+            <button type="button" class="btn btn-primary" onclick="nextStep(3)">
+              <span class="btn-text">Next</span>
+              <i class="fas fa-arrow-right btn-icon-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 4: Contact & Final -->
+        <div class="form-step" id="step4">
+          <div class="step-indicator">
+            <span class="current-step">Step 4 of 4:</span> Contact & Final Details
+          </div>
+
+          <div class="form-section">
+            <label for="email"><span class="question-number">11</span>Email Address of Complaint</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email address">
+          </div>
+
+          <div class="form-section">
+            <label><span class="question-number">12</span>Overall Feedback Satisfaction</label>
+            <div class="radio-group">
+              <div class="option-item">
+                <input type="radio" id="satisfy_excellent" name="feedback_satisfaction" value="Excellent">
+                <label for="satisfy_excellent">🌟 A - Excellent</label>
+              </div>
+              <div class="option-item">
+                <input type="radio" id="satisfy_very_good" name="feedback_satisfaction" value="Very Good">
+                <label for="satisfy_very_good">✨ B - Very Good</label>
+              </div>
+              <div class="option-item">
+                <input type="radio" id="satisfy_good" name="feedback_satisfaction" value="Good">
+                <label for="satisfy_good">👍 C - Good</label>
+              </div>
+              <div class="option-item">
+                <input type="radio" id="satisfy_fair" name="feedback_satisfaction" value="Fair/Poor">
+                <label for="satisfy_fair">👎 D - Fair / Poor</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-navigation">
+            <button type="button" class="btn btn-secondary" onclick="prevStep(4)">
+              <i class="fas fa-arrow-left btn-icon"></i>
+              <span class="btn-text">Previous</span>
+            </button>
+            <button type="submit" class="btn btn-success" id="submitBtn">
+              <span class="btn-text">Submit Feedback</span>
+              <i class="fas fa-paper-plane btn-icon-right"></i>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let currentStep = 1;
+    const totalSteps = 4;
+
+    function showStep(step) {
+      // Hide all steps
+      for (let i = 1; i <= totalSteps; i++) {
+        document.getElementById(`step${i}`).classList.remove('active');
+        document.getElementById(`step-${i}`).classList.remove('active', 'completed');
+        document.querySelectorAll('.step-label')[i-1].classList.remove('active');
+        if (i < totalSteps) {
+          document.getElementById(`line-${i}`).classList.remove('completed');
+        }
+      }
+
+      // Show current step
+      document.getElementById(`step${step}`).classList.add('active');
+      document.getElementById(`step-${step}`).classList.add('active');
+      document.querySelectorAll('.step-label')[step-1].classList.add('active');
+
+      // Mark completed steps
+      for (let i = 1; i < step; i++) {
+        document.getElementById(`step-${i}`).classList.add('completed');
+        document.getElementById(`line-${i}`).classList.add('completed');
+      }
+
+      // Scroll to top of form on mobile
+      if (window.innerWidth <= 768) {
+        document.querySelector('.container').scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    }
+
+    function nextStep(step) {
+      if (validateStep(step)) {
+        currentStep = step + 1;
+        showStep(currentStep);
+      }
+    }
+
+    function prevStep(step) {
+      currentStep = step - 1;
+      showStep(currentStep);
+    }
+
+    function validateStep(step) {
+      const currentStepElement = document.getElementById(`step${step}`);
+      const requiredFields = currentStepElement.querySelectorAll('input[required], textarea[required]');
+
+      for (let field of requiredFields) {
+        if (field.type === 'radio') {
+          // Check if any radio button in the group is selected
+          const radioGroup = currentStepElement.querySelectorAll(`input[name="${field.name}"]`);
+          const isSelected = Array.from(radioGroup).some(radio => radio.checked);
+          if (!isSelected) {
+            showNotification('Please select an option for Position before proceeding.', 'error');
+            return false;
+          }
+        } else if (!field.value.trim()) {
+          field.focus();
+          showNotification('Please fill in all required fields before proceeding.', 'error');
+          return false;
+        }
+      }
+      return true;
+    }
+
+    function showNotification(message, type = 'info') {
+      // Create notification element
+      const notification = document.createElement('div');
+      notification.className = `notification ${type}`;
+      notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 15px 20px;
+        border-radius: 8px;
+        color: white;
+        font-weight: 600;
+        z-index: 10000;
+        max-width: 300px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+      `;
+
+      if (type === 'error') {
+        notification.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
+      } else if (type === 'success') {
+        notification.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+      } else {
+        notification.style.background = 'linear-gradient(135deg, #2563eb, #1d4ed8)';
+      }
+
+      notification.textContent = message;
+      document.body.appendChild(notification);
+
+      // Animate in
+      setTimeout(() => {
+        notification.style.transform = 'translateX(0)';
+      }, 100);
+
+      // Remove after 3 seconds
+      setTimeout(() => {
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+          document.body.removeChild(notification);
+        }, 300);
+      }, 3000);
+    }
+
+    // Handle form submission with loading state
+    document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+      const submitBtn = document.getElementById('submitBtn');
+      const btnText = submitBtn.querySelector('.btn-text');
+      const btnIcon = submitBtn.querySelector('.btn-icon-right');
+
+      // Add loading state
+      submitBtn.classList.add('loading');
+      submitBtn.disabled = true;
+
+      // Replace icon with spinner
+      btnIcon.style.display = 'none';
+      const spinner = document.createElement('div');
+      spinner.className = 'spinner';
+      submitBtn.appendChild(spinner);
+
+      // Change text
+      btnText.textContent = 'Submitting...';
+
+      // Show loading notification
+      showNotification('Submitting your feedback...', 'info');
+    });
+
+    // Handle responsive navigation
+    function handleResize() {
+      if (window.innerWidth <= 768) {
+        // Mobile optimizations
+        document.body.style.fontSize = '14px';
+      } else {
+        document.body.style.fontSize = '16px';
+      }
+    }
+
+    // Initialize the form
+    showStep(1);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+  </script>
+</body>
+</html>
