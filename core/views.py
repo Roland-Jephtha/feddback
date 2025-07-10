@@ -101,6 +101,7 @@ def feedback_view(request):
             logger.info(f"Feedback created successfully: ID {feedback.id}, Name: {name}")
 
             # Send email notification
+            
             try:
                 send_feedback_email(feedback)
                 logger.info(f"Email notification sent for feedback ID {feedback.id}")
